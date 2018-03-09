@@ -156,6 +156,11 @@ services:
     tags:
       - { name: form.type }
 
+  Shopsys\FrameworkBundle\Form\FormGroup:
+    class: Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
   Shopsys\FrameworkBundle\Form\FriendlyUrlType:
     tags:
       - { name: form.type }
