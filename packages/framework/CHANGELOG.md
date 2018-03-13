@@ -16,3 +16,20 @@ from its open-box repository [shopsys/project-base](https://github.com/shopsys/p
         - custom form types, form extensions and twig extensions
         - compiler passes to allow basic extensibility with plugins (eg. product feeds)
     - this is going to be a base of a newly built architecture of [Shopsys Framework](http://www.shopsys-framework.com/)
+
+### Changed
+- configuration of form types in administration is enabled using form type options (@Miroslav-Stopka)
+    -  following form types configured using options:
+        - VatSettingsFormType
+        - SliderItemFormType
+        - ShopInfoSettingFormType
+        - SeoSettingFormType
+        - MailSettingFormType
+        - LegalConditionsSettingFormType
+        - HeurekaShopCertificationFormType
+        - CustomerCommunicationFormType
+        - CookiesSettingFormType
+        - CategoryFormType
+        - ArticleFormType
+        - AdvertFormType
+        - AdministratorFormType
