@@ -1,0 +1,7 @@
+Shopsys\ProductFeed\DomainConfigInterface
+Shopsys\ProductFeed\FeedConfigInterface
+Symfony\Component\Config\FileLocator
+Symfony\Component\DependencyInjection\ContainerBuilder
+Symfony\Component\DependencyInjection\Loader\YamlFileLoader
+Symfony\Component\HttpKernel\Bundle\Bundle
+Symfony\Component\HttpKernel\DependencyInjection\Extension

@@ -1,0 +1,5 @@
+PHP_CodeSniffer\Files\File
+PHP_CodeSniffer\Sniffs\AbstractVariableSniff
+PHP_CodeSniffer\Sniffs\Sniff
+PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\ForbiddenFunctionsSniff
+PHP_CodeSniffer\Util\Common

@@ -1,0 +1,5 @@
+Bmatzner\JQueryBundle\BmatznerJQueryBundle
+Bmatzner\JQueryUIBundle\BmatznerJQueryUIBundle
+Fp\JsFormValidatorBundle\FpJsFormValidatorBundle
+Intaro\PostgresSearchBundle\IntaroPostgresSearchBundle
+JMS\TranslationBundle\JMSTranslationBundle
