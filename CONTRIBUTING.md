@@ -7,6 +7,7 @@ You can take part in making Shopsys Framework better.
 * [Guidelines for Creating Commits](./docs/contributing/guidelines-for-creating-commits.md)
 * [Guidelines for Writing Documentation](./docs/contributing/guidelines-for-writing-documentation.md)
 * [Guidelines for Pull Request](./docs/contributing/quidelines-for-pull-request.md)
+* [Guidelines for Dependencies](./docs/contributing/quidelines-for-dependencies.md)
 
 For your code to be accepted, you should follow our guidelines mentioned above,
 and the code must pass [coding standards](./docs/contributing/coding-standards.md) checks and tests:
