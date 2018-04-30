@@ -1,5 +1,6 @@
 imports:
   - { resource: forms.yml }
+  - { resource: data_fixtures.yml }
 
 services:
   _defaults:
@@ -11,6 +12,9 @@ services:
     resource: '../../Controller/'
     public: true
     tags: ['controller.service_arguments']
+
+  Shopsys\ShopBundle\Component\:
+    resource: '../../Component/*/*.php'
 
   Shopsys\ShopBundle\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 

@@ -1,0 +1,131 @@
+<?php
+
+namespace Shopsys\ShopBundle\DataFixtures\Demo;
+
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader;
+use Shopsys\FrameworkBundle\Model\Product\ProductEditData;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
+use Shopsys\ShopBundle\Component\DataFixture\ProductDataFixtureReferenceInjector;
+
+class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
+{
+    const PRODUCT_PREFIX = 'product_';
+
+    /** @var \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader */
+    private $productDataFixtureLoader;
+
+    /** @var \Shopsys\ShopBundle\Component\DataFixture\ProductDataFixtureReferenceInjector */
+    private $referenceInjector;
+
+    /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade */
+    private $persistentReferenceFacade;
+
+    /** @var \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader */
+    private $productDataFixtureCsvReader;
+
+    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
+    private $productFacade;
+
+    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade */
+    private $productVariantFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
+     * @param \Shopsys\ShopBundle\Component\DataFixture\ProductDataFixtureReferenceInjector $referenceInjector
+     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
+     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
+     */
+    public function __construct(
+        ProductDataFixtureLoader $productDataFixtureLoader,
+        ProductDataFixtureReferenceInjector $referenceInjector,
+        PersistentReferenceFacade $persistentReferenceFacade,
+        ProductDataFixtureCsvReader $productDataFixtureCsvReader,
+        ProductFacade $productFacade,
+        ProductVariantFacade $productVariantFacade
+    ) {
+        $this->productDataFixtureLoader = $productDataFixtureLoader;
+        $this->referenceInjector = $referenceInjector;
+        $this->persistentReferenceFacade = $persistentReferenceFacade;
+        $this->productDataFixtureCsvReader = $productDataFixtureCsvReader;
+        $this->productFacade = $productFacade;
+        $this->productVariantFacade = $productVariantFacade;
+    }
+
+    /**
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     */
+    public function load(ObjectManager $manager)
+    {
+        $onlyForFirstDomain = true;
+        $this->referenceInjector->loadReferences($this->productDataFixtureLoader, $this->persistentReferenceFacade, $onlyForFirstDomain);
+
+        $csvRows = $this->productDataFixtureCsvReader->getProductDataFixtureCsvRows();
+        $productNo = 1;
+        $productsByCatnum = [];
+        foreach ($csvRows as $row) {
+            $productEditData = $this->productDataFixtureLoader->createProductEditDataFromRowForFirstDomain($row);
+            $product = $this->createProduct(self::PRODUCT_PREFIX . $productNo, $productEditData);
+
+            if ($product->getCatnum() !== null) {
+                $productsByCatnum[$product->getCatnum()] = $product;
+            }
+            $productNo++;
+        }
+
+        $this->createVariants($productsByCatnum, $productNo);
+    }
+
+    /**
+     * @param string $referenceName
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductEditData $productEditData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     */
+    private function createProduct($referenceName, ProductEditData $productEditData)
+    {
+        $product = $this->productFacade->create($productEditData);
+
+        $this->addReference($referenceName, $product);
+
+        return $product;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsByCatnum
+     * @param int $productNo
+     */
+    private function createVariants(array $productsByCatnum, $productNo)
+    {
+        $csvRows = $this->productDataFixtureCsvReader->getProductDataFixtureCsvRows();
+        $variantCatnumsByMainVariantCatnum = $this->productDataFixtureLoader->getVariantCatnumsIndexedByMainVariantCatnum($csvRows);
+
+        foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
+            $mainProduct = $productsByCatnum[$mainVariantCatnum];
+            /* @var $mainProduct \Shopsys\FrameworkBundle\Model\Product\Product */
+
+            $variants = [];
+            foreach ($variantsCatnums as $variantCatnum) {
+                $variants[] = $productsByCatnum[$variantCatnum];
+            }
+
+            $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
+            $this->addReference(self::PRODUCT_PREFIX . $productNo, $mainVariant);
+            $productNo++;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDependencies()
+    {
+        return ProductDataFixtureReferenceInjector::getDependenciesForFirstDomain();
+    }
+}
