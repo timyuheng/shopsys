@@ -723,7 +723,7 @@
             <arg value="${path.bin-console}" />
             <arg value="--env=test" />
             <arg value="shopsys:fixtures:load" />
-            <arg value="--fixtures=${path.framework}/src/DataFixtures/Base" />
+            <arg value="--fixtures-directory=${path.framework}/src/DataFixtures/Base" />
             <arg value="--append" />
             <arg value="--no-interaction" />
         </exec>
@@ -737,7 +737,7 @@
                     <arg value="${path.bin-console}" />
                     <arg value="--env=test" />
                     <arg value="shopsys:fixtures:load" />
-                    <arg value="--fixtures=${path.framework}/src/DataFixtures/DemoMultidomain" />
+                    <arg value="--fixtures-directory=${path.framework}/src/DataFixtures/DemoMultidomain" />
                     <arg value="--append" />
                     <arg value="--no-interaction" />
                 </exec>
@@ -758,8 +758,8 @@
             <arg value="${path.bin-console}" />
             <arg value="--env=test" />
             <arg value="shopsys:fixtures:load" />
-            <arg value="--fixtures=${path.framework}/src/DataFixtures/Base" />
-            <arg value="--fixtures=${path.framework}/src/DataFixtures/Demo" />
+            <arg value="--fixtures-directory=${path.framework}/src/DataFixtures/Base" />
+            <arg value="--fixtures-directory=${path.framework}/src/DataFixtures/Demo" />
             <arg value="--append" />
             <arg value="--no-interaction" />
         </exec>

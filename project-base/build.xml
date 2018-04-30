@@ -166,7 +166,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
             <arg value="shopsys:fixtures:load" />
-            <arg value="--fixtures=${path.framework}/src/DataFixtures/Base" />
+            <arg value="--fixtures-directory=${path.framework}/src/DataFixtures/Base" />
             <arg value="--append" />
             <arg value="--no-interaction" />
         </exec>
@@ -179,7 +179,19 @@
                 <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
                     <arg value="${path.bin-console}" />
                     <arg value="shopsys:fixtures:load" />
-                    <arg value="--fixtures=${path.src}/Shopsys/ShopBundle/DataFixtures/DemoMultidomain" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\ArticleDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\BestsellingProductDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\CategoryDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\CountryDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\MailTemplateDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\NewsletterSubscriberDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\OrderDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\PricingGroupDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\ProductDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\SettingValueDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\SettingValueShopInfoDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\TopProductDataFixture" />
+                    <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\DemoMultidomain\\UserDataFixture" />
                     <arg value="--append" />
                     <arg value="--no-interaction" />
                 </exec>
@@ -198,8 +210,30 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
             <arg value="shopsys:fixtures:load" />
-            <arg value="--fixtures=${path.framework}/src/DataFixtures/Base" />
-            <arg value="--fixtures=${path.src}/Shopsys/ShopBundle/DataFixtures/Demo" />
+
+            <arg value="--fixtures-directory=${path.framework}/src/DataFixtures/Base" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\AdvertDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\ArticleDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\BestsellingProductDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\BrandDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\CategoryDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\CountryDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\NewsletterSubscriberDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\OrderDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\PaymentDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\PersonalDataAccessRequestDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\ProductAccessoriesDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\ProductDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\PromoCodeDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\ScriptDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\SettingValueDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\SettingValueShopInfoDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\SliderItemDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\TopCategoryDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\TopProductDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\TransportDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\UnitDataFixture" />
+            <arg value="--fixtures-class=Shopsys\\FrameworkBundle\\DataFixtures\\Demo\\UserDataFixture" />
             <arg value="--append" />
             <arg value="--no-interaction" />
         </exec>

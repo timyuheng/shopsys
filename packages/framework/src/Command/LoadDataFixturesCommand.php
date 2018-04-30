@@ -45,7 +45,8 @@ class LoadDataFixturesCommand extends DoctrineCommand
            ->addOption('em', null, InputOption::VALUE_REQUIRED, 'The entity manager to use for this command.')
            ->addOption('shard', null, InputOption::VALUE_REQUIRED, 'The shard connection to use for this command.')
            ->addOption('purge-with-truncate', null, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
-           ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Purge data by using a database-level TRUNCATE statement')
+           ->addOption('fixtures-directory', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Define a directory to load the fixtures from')
+           ->addOption('fixtures-class', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Define a FQCN of a class to load the fixtures from. Important: The class must be a public service')
            ->setHelp(
                <<<EOT
 The <info>%command.name%</info> command loads data fixtures from your application:
@@ -90,9 +91,19 @@ EOT
             $em->getConnection()->connect($input->getOption('shard'));
         }
 
-        foreach ($input->getOption('fixtures') as $item) {
+        foreach ($input->getOption('fixtures-directory') as $item) {
             $this->fixturesLoader->loadFromDirectory($item);
         }
+
+        $fixturesFromClasses = [];
+        foreach ($input->getOption('fixtures-class') as $class) {
+            if (class_exists($class)) {
+                $fixturesFromClasses[] = $this->getContainer()->get($class);
+            } else {
+                throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\NonExistingClassException($class);
+            }
+        }
+        $this->fixturesLoader->addFixtures($fixturesFromClasses);
 
         if (!$this->fixturesLoader->getFixtures()) {
             throw new InvalidArgumentException(

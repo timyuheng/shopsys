@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - all exception interfaces are now Throwable (@TomasLudvik)
 - visibility of all private properties and methods of facades was changed to protected (@vitek-rostislav)
     - protected visibility allows overriding of behavior from projects
+- `LoadDataFixturesCommand`: `--fixtures` option renamed to `--fixtures-directory` (@vitek-rostislav)
+    - the command now enables explicitly list required fixtures by using new option `--fixtures-class`
+    - the `--fixtures-class` is now used for loading all demo data fixtures 
+        - it enables exchange of any framework fixture with custom fixture in project base
 
 ### Fixed
 - choiceList values are prepared for js Choice(s)ToBooleanArrayTransformer (@Miroslav-Stopka)
