@@ -106,12 +106,15 @@ class ImageDemoCommand extends Command
         $localArchiveFilepath = $this->cacheDirectory . '/' . 'demoImages.zip';
         $unpackedDomainImagesPath = $this->imagesDirectory . 'domain';
 
+        $localArchiveFilepath2 = $this->imagesDirectory . '/bck1/' . 'demoImages.zip';
+        $imagesDirectory2 = $this->imagesDirectory . '/bck2/';
+
         $isCompleted = false;
 
         if (!$this->isImagesTableEmpty()) {
             $symfonyStyleIo = new SymfonyStyle($input, $output);
             $questionHelper = $this->getHelper('question');
-            /* @var $questionHelper \Symfony\Component\Console\Helper\QuestionHelper*/
+            /* @var $questionHelper \Symfony\Component\Console\Helper\QuestionHelper */
 
             $question = 'There are some images in your database. Those images will be deleted in order to install demo images. Do you wish to proceed? [YES]';
             $truncateImagesQuestion = new ConfirmationQuestion($question);
@@ -123,6 +126,9 @@ class ImageDemoCommand extends Command
             $this->truncateImagesFromDb();
             $symfonyStyleIo->note('DB table "' . self::IMAGES_TABLE_NAME . '" has been truncated.');
         }
+
+        $this->downloadImages($output, $this->demoImagesArchiveUrl, $localArchiveFilepath2);
+        $this->unpackImages($output, $imagesDirectory2, $localArchiveFilepath2);
 
         if ($this->downloadImages($output, $this->demoImagesArchiveUrl, $localArchiveFilepath)) {
             if ($this->unpackImages($output, $this->imagesDirectory, $localArchiveFilepath)) {
