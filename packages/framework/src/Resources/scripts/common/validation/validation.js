@@ -3,19 +3,23 @@
     Shopsys = window.Shopsys || {};
     Shopsys.validation = Shopsys.validation || {};
 
-    $(document).ready(function () {
-        $('.js-no-validate-button').click(function () {
+    Shopsys.register.registerCallback(function ($container) {
+
+        $container.find('.js-no-validate-button').click(function () {
             $(this).closest('form').addClass('js-no-validate');
         });
-        $('.js-validation-error-close').click(function () {
+
+        $container.find('.js-validation-error-close').click(function () {
             $(this).closest('.js-validation-error').hide();
         });
-        $('.js-validation-error-toggle').click(function () {
+
+        $container.find('.js-validation-error-toggle').click(function () {
             $(this)
                 .closest('.js-validation-errors-list')
                 .find('.js-validation-error')
                 .toggle();
         });
+
     });
 
     Shopsys.validation.findElementsToHighlight = function ($formInput) {

@@ -37,6 +37,7 @@
             Shopsys.formChangeInfo.showInfo();
             Shopsys.parameters.refreshCount($collection);
             Shopsys.validation.addNewItemToCollection('#product_edit_form_parameters', index);
+            Shopsys.register.registerNewContent($item);
 
             return false;
         });
