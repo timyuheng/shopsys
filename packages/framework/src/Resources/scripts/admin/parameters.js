@@ -37,6 +37,7 @@
             Shopsys.formChangeInfo.showInfo();
             Shopsys.parameters.refreshCount($collection);
             Shopsys.validation.addNewItemToCollection('#product_edit_form_parameters', index);
+            $('#product_edit_form_parameters .js-parameters-item input').blur();
             Shopsys.register.registerNewContent($item);
 
             return false;
