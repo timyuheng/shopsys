@@ -60,6 +60,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - changed domain icon in e-shop domain administration can be saved 
 - [#260 - Admin: Js validation: dynamically added parameters are now validated](https://github.com/shopsys/shopsys/pull/260)
     - validation is evaluated after dynamic parameters are added
+    - jQuery migration console error logging is no more
 
 ### [shopsys/project-base]
 #### Changed
