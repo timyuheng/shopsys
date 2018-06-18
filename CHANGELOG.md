@@ -61,6 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#260 - Admin: Js validation: dynamically added parameters are now validated](https://github.com/shopsys/shopsys/pull/260)
     - validation is evaluated after dynamic parameters are added
     - jQuery migration console error logging is no more
+    - support for multiple option of Flag and Brand items were added for form to be validated and not submitted if it is invalid
 
 ### [shopsys/project-base]
 #### Changed

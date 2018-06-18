@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Component\Validator;
 
 use Fp\JsFormValidatorBundle\Factory\JsFormValidatorFactory as BaseJsFormValidatorFactory;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
@@ -47,17 +49,20 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
                 : ['name' => $namespace . 'ChoiceToBooleanArrayTransformer'];
 
             $transformer['choiceList'] = [];
-            $optionsItemsThatAreNotInstanceOfParameterValue = [];
             foreach ($config->getOption('choices') as $formOptionChoiceItem) {
-                if ($formOptionChoiceItem instanceof ParameterValue) {
+                if (preg_match('#^/admin/#', $this->router->getContext()->getPathInfo()) !== 1
+                    && (
+                        $formOptionChoiceItem instanceof ParameterValue
+                        || $formOptionChoiceItem instanceof Flag
+                        || $formOptionChoiceItem instanceof Brand
+                    )
+                ) {
                     $optionItemId = $formOptionChoiceItem->getId();
                     $transformer['choiceList'][$optionItemId] = $formOptionChoiceItem;
                 } else {
-                    $optionsItemsThatAreNotInstanceOfParameterValue[] = $formOptionChoiceItem;
+                    $transformer['choiceList'][] = $formOptionChoiceItem;
                 }
             }
-
-            array_push($transformer['choiceList'], $optionsItemsThatAreNotInstanceOfParameterValue);
 
             array_unshift($viewTransformers, $transformer);
         }
