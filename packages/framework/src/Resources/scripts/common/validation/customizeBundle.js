@@ -115,7 +115,8 @@
         Shopsys.timeout.setTimeoutAndClearPrevious('Shopsys.validation.validateWithParentsDelayed', executeDelayedValidators, 100);
     };
 
-    // Issue in dynamic collections validation
+    // Issue in dynamic collections validation that causes duplication of identifiers
+    // prototype properties was cleared of __name__ keyword and replaced for index so duplicated identifiers are no more
     // https://github.com/formapro/JsFormValidatorBundle/issues/139
     FpJsFormValidator._preparePrototype = FpJsFormValidator.preparePrototype;
     FpJsFormValidator.preparePrototype = function (prototype, name, id) {
