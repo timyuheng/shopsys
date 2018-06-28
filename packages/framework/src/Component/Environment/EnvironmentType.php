@@ -16,6 +16,6 @@ class EnvironmentType
      */
     public static function isDebug(string $environment): bool
     {
-        return $environment === self::DEVELOPMENT;
+        return true;
     }
 }

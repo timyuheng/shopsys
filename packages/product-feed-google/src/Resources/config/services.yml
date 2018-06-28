@@ -6,6 +6,7 @@ services:
 
   Shopsys\ProductFeed\GoogleBundle\:
     resource: '../../*'
+    exclude: '../../Migrations'
 
   Shopsys\ProductFeed\GoogleBundle\GoogleFeedConfig:
     tags:

@@ -6,6 +6,7 @@ services:
 
   Shopsys\ProductFeed\HeurekaBundle\:
     resource: '../../*'
+    exclude: '../../{Migrations,**Exception.php}'
 
   Shopsys\ProductFeed\HeurekaBundle\HeurekaFeedConfig:
     tags:
