@@ -109,8 +109,8 @@ jobs:
             ssh -i ~/shopsys root@shopsys.p4a.me rm /workspace/shopsys/$CIRCLE_BRANCH/source.tar.gz
             # create directory for database persistent volume
             ssh -i ~/shopsys root@shopsys.p4a.me mkdir -p /workspace/shopsys/$CIRCLE_BRANCH/db
-            # change file owner to www-data user (same as in container)
-            ssh -i ~/shopsys root@shopsys.p4a.me chown -R www-data:www-data /workspace/shopsys/$CIRCLE_BRANCH
+            # change file owner to 1000 user (same as in container)
+            ssh -i ~/shopsys root@shopsys.p4a.me chown -R 1000:1000 /workspace/shopsys/$CIRCLE_BRANCH
       - run:
           name: Deploy application to Kubernetes cluster
           command: |
