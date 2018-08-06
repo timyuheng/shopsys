@@ -48,13 +48,15 @@ jobs:
             echo -e $KUBERNETES_CA_CRT > ~/.minikube/ca.crt
             echo -e $KUBERNETES_CLIENT_CRT > ~/.minikube/client.crt
             echo -e $KUBERNETES_CLIENT_KEY > ~/.minikube/client.key
+            FIRST_DOMAIN_HOSTNAME = $CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            SECOND_DOMAIN_HOSTNAME = 2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN;
       - run:
           name: Generate Kubernetes manifests for current build
           command: |
             DOCKER_IMAGE_TAG="$(cksum ../docker/php-fpm/Dockerfile | cut -d ' ' -f1)"
             # Write domain records into ingress resource
-            yq write --inplace ingress.yml spec.rules[0].host $CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
-            yq write --inplace ingress.yml spec.rules[1].host 2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            yq write --inplace ingress.yml spec.rules[0].host $FIRST_DOMAIN_HOSTNAME
+            yq write --inplace ingress.yml spec.rules[1].host $SECOND_DOMAIN_HOSTNAME
             # Following 2 lines are very important. We must redeploy postgress and webserver because of hostPath volumes
             yq write --inplace deployments/postgres.yml spec.template.metadata.labels.commit $CIRCLE_SHA1
             yq write --inplace deployments/postgres.yml spec.selector.matchLabels.commit $CIRCLE_SHA1
@@ -63,8 +65,8 @@ jobs:
             # Replace docker image in deployment definition
             yq write --inplace deployments/webserver.yml spec.template.spec.containers[0].image $DOCKER_IMAGE:$DOCKER_IMAGE_TAG
             # Add domain to pod hosts
-            yq write --inplace deployments/webserver.yml spec.template.spec.hostAliases[0].hostnames[2] $CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
-            yq write --inplace deployments/webserver.yml spec.template.spec.hostAliases[0].hostnames[3] 2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            yq write --inplace deployments/webserver.yml spec.template.spec.hostAliases[0].hostnames[2] $FIRST_DOMAIN_HOSTNAME
+            yq write --inplace deployments/webserver.yml spec.template.spec.hostAliases[0].hostnames[3] $SECOND_DOMAIN_HOSTNAME
             # Add path to persistent volumes
             yq write --inplace deployments/webserver.yml spec.template.spec.volumes[0].hostPath.path /workspace/shopsys/$CIRCLE_BRANCH/source
             yq write --inplace deployments/postgres.yml spec.template.spec.volumes[0].hostPath.path /workspace/shopsys/$CIRCLE_BRANCH/db
@@ -82,8 +84,8 @@ jobs:
             cp project-base/app/config/parameters_test.yml.dist project-base/app/config/parameters_test.yml
             cp project-base/app/config/parameters.yml.dist project-base/app/config/parameters.yml
             # Add domains into domain file
-            yq write --inplace project-base/app/config/domains_urls.yml domains_urls[0].url http://$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
-            yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            yq write --inplace project-base/app/config/domains_urls.yml domains_urls[0].url http://$FIRST_DOMAIN_HOSTNAME
+            yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://$SECOND_DOMAIN_HOSTNAME
           environment:
             DEVELOPMENT_SERVER_DOMAIN: p4a.me
       - run:
