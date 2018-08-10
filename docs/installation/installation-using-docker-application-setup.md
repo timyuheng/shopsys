@@ -12,6 +12,11 @@ docker exec -it shopsys-framework-php-fpm sh
 ```
 
 ### 1.2. Install dependencies and configure parameters
+
+Composer requires token to avoid GitHub API rate limit. 
+You can create this token on `https://github.com/settings/tokens/new`.
+Go to your `docker-compose.yml` file, find `php-fpm` container and save this in `enviroment` variable `COMPOSER_AUTH` (replace text "place-your-token-here" with your token).
+
 ```
 composer install
 ```
@@ -21,9 +26,6 @@ The optimized composer speed up your application.
 ```
 composer install -o
 ```
-
-Composer will prompt you to insert token to avoid GitHub API rate limit. You can create this token on `https://github.com/settings/tokens/new`.
-This token is reusable so keep it for further usage.
 
 Composer will prompt you to set parameters ([description of parameters](native-installation.md#2-install-dependencies-and-configure-parameters)).
 The default parameters suggested by composer are currently set for application running in Docker so you can just use these.

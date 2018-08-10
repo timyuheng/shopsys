@@ -29,6 +29,8 @@ services:
                 www_data_uid: 1000
                 www_data_gid: 1000
         container_name: shopsys-framework-php-fpm
+        environment:
+            - COMPOSER_AUTH={"github-oauth":{"github.com":"place-your-token-here"}}
         volumes:
             - .:/var/www/html
             - ./project-base/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
