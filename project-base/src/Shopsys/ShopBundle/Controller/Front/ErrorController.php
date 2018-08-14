@@ -152,4 +152,9 @@ class ErrorController extends FrontBaseController
 
         return new Response($blueScreenHtml);
     }
+
+    public function notFoundAction(Request $request)
+    {
+        return $this->createErrorPageResponse(404);
+    }
 }

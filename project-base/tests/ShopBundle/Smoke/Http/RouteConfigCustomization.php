@@ -233,6 +233,23 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setParameter('id', $vat->getId())
                     ->setParameter('newId', $newVat->getId());
+            })
+            ->customizeByRouteName('admin_flag_delete', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Functionality of flags is hidden')
+                    ->setExpectedStatusCode(404)
+                    ->setParameter('id', 1)
+                    ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container) {
+                        $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
+                        /* @var $routeCsrfProtector \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector */
+                        $csrfTokenManager = $container->get('security.csrf.token_manager');
+                        /* @var $csrfTokenManager \Symfony\Component\Security\Csrf\CsrfTokenManager */
+
+                        $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
+                        $token = $csrfTokenManager->getToken($tokenId);
+
+                        $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
+                        $requestDataSet->setParameter($parameterName, $token->getValue());
+                    });
             });
     }
 
