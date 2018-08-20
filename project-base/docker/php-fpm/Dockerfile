@@ -62,7 +62,7 @@ COPY docker-php-entrypoint /usr/local/bin/
 
 # allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
 # if the GID is already in use, we will assign GID 82 instead (82 is the standard uid/gid for "www-data" in Alpine)
-ARG www_data_uid
-ARG www_data_gid
+ARG www_data_uid=1000
+ARG www_data_gid=1000
 RUN deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data
 USER www-data
