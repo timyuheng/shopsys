@@ -69,3 +69,7 @@ USER www-data
 
 # copy source code to container
 COPY / /var/www/html
+
+ARG GITHUB_TOKEN
+RUN composer config -g github-oauth.github.com $GITHUB_TOKEN
+RUN composer install
