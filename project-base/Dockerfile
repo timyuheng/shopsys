@@ -4,7 +4,7 @@ FROM php:7.2-fpm-alpine
 RUN apk add --update git
 
 # install Composer
-COPY docker-install-composer /usr/local/bin/docker-install-composer
+COPY docker/php-fpm/docker-install-composer /usr/local/bin/docker-install-composer
 RUN chmod +x /usr/local/bin/docker-install-composer && docker-install-composer
 
 # libpng-dev needed by "gd" extension
@@ -58,7 +58,7 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 ENV LC_ALL=en_US.utf8 LANG=en_US.utf8 LANGUAGE=en_US.utf8
 
 # overwrite the original entry-point from the PHP Docker image with our own
-COPY docker-php-entrypoint /usr/local/bin/
+COPY docker/php-fpm/docker-php-entrypoint /usr/local/bin/
 
 # allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
 # if the GID is already in use, we will assign GID 82 instead (82 is the standard uid/gid for "www-data" in Alpine)
@@ -66,3 +66,6 @@ ARG www_data_uid=1000
 ARG www_data_gid=1000
 RUN deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data
 USER www-data
+
+# copy source code to container
+COPY / /var/www/html
