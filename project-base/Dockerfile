@@ -65,7 +65,6 @@ COPY docker/php-fpm/docker-php-entrypoint /usr/local/bin/
 ARG www_data_uid=1000
 ARG www_data_gid=1000
 RUN deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data
-USER www-data
 
 # copy source code to container
 COPY / /var/www/html
@@ -73,3 +72,8 @@ COPY / /var/www/html
 ARG GITHUB_TOKEN
 RUN composer config -g github-oauth.github.com $GITHUB_TOKEN
 RUN composer install
+
+# set right permission for folder and its content
+RUN chown -R www-data:www-data /var/www/html
+
+USER www-data
