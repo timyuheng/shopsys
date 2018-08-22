@@ -4,7 +4,12 @@ FROM php:7.2-fpm-alpine
 COPY docker-install-composer /usr/local/bin/docker-install-composer
 RUN chmod +x /usr/local/bin/docker-install-composer && docker-install-composer
 
-# install necessary PHP extensions
+# run composer install and symfony webserver after container is started
+COPY docker-after-start /usr/local/bin/docker-after-start
+RUN chmod +x /usr/local/bin/docker-after-start
+CMD /usr/local/bin/docker-after-start
+
+# install necessary PHP extension
 RUN docker-php-ext-install \
     opcache
 
@@ -25,5 +30,6 @@ RUN composer config -g github-oauth.github.com $github_token
 ARG www_data_uid
 ARG www_data_gid
 RUN deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data
-
 USER www-data
+
+WORKDIR /var/www/html

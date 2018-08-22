@@ -1,0 +1,7 @@
+#!/bin/sh
+
+until composer install
+do
+    echo "Retrying composer install"
+done
+php bin/console server:run *:8000

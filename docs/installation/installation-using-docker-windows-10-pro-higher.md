@@ -35,7 +35,8 @@ copy docker\conf\docker-compose-win.yml.dist docker-compose.yml
 Shopsys Framework includes a lot of dependencies installed via composer. 
 During composer install the Github API Rate Limit is reached and it is necessary to provide Github token to overcome this limit.
 This token can be generated on [Github -> Settings -> Developer Settings -> Personal access tokens](https://github.com/settings/tokens/new?scopes=repo&description=Composer+API+token)
-The token save in your `docker-compose.yml` file in `services -> php-fpm -> build -> args -> github_token` (replace the `place-your-token-here` string).
+Save your token into docker-compose.yml file. 
+Token is located in `services -> php-fpm -> build -> args -> github_token`.
 
 ### 3. Grant Docker access to your files
 - Right click Docker icon in your system tray and choose `Settings...`

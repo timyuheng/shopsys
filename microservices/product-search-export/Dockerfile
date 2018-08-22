@@ -1,13 +1,8 @@
 FROM php:7.2-fpm-alpine
 
 # install Composer
-COPY docker-install-composer /usr/local/bin/docker-install-composer
+COPY docker/docker-install-composer /usr/local/bin/docker-install-composer
 RUN chmod +x /usr/local/bin/docker-install-composer && docker-install-composer
-
-# run composer install and symfony webserver after container is started
-COPY docker-after-start /usr/local/bin/docker-after-start
-RUN chmod +x /usr/local/bin/docker-after-start
-CMD /usr/local/bin/docker-after-start
 
 # install necessary PHP extension
 RUN docker-php-ext-install \
@@ -20,16 +15,27 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 ENV LC_ALL=en_US.utf8 LANG=en_US.utf8 LANGUAGE=en_US.utf8
 
 # overwrite the original entry-point from the PHP Docker image with our own
-COPY docker-php-entrypoint /usr/local/bin/
+COPY docker/docker-php-entrypoint /usr/local/bin/
+
+# copy source code to container
+COPY / /var/www/html
+
+# copy php configuration
+COPY docker/php-ini-overrides.ini /usr/local/etc/php/php.ini
 
 ARG github_token
 RUN composer config -g github-oauth.github.com $github_token
+RUN composer install
 
 # allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
 # if the GID is already in use, we will assign GID 82 instead (82 is the standard uid/gid for "www-data" in Alpine)
 ARG www_data_uid
 ARG www_data_gid
 RUN deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data
+
+# set right permissions for folder and its content
+RUN chown -R www-data:www-data /var/www/html
+
 USER www-data
 
-WORKDIR /var/www/html
+RUN php bin/console server:run *:8000

@@ -67,6 +67,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#429 - Microservice Product Search Export](https://github.com/shopsys/shopsys/pull/429)
     - the repository was added, extracting product search export functionality from the Shopsys Framework
 
+###[shopsys/microservice-product-search]
+#### Changed
+- [#430 - Product search microservice is built as Docker image](https://github.com/shopsys/shopsys/pull/430)
+
 ## [7.0.0-alpha5] - 2018-08-22
 ### [shopsys/framework]
 #### Added

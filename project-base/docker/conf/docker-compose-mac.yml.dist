@@ -98,14 +98,16 @@ services:
             - discovery.type=single-node
 
     microservice-product-search:
-        build:
-            context: ../microservices/product-search/docker
-            args:
-                <<: *permission_settings
+        image: shopsys/shopsys:microservice-test
         container_name: shopsys-framework-microservice-product-search
-        volumes:
-            - shopsys-framework-microservice-product-search-sync:/var/www/html
-            - ../microservices/product-search/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+        links:
+            - elasticsearch
+        depends_on:
+            - elasticsearch
+
+    microservice-product-search-export:
+        image: shopsys/shopsys:microservice-product-search-export-test
+        container_name: shopsys-framework-microservice-product-search-export
         links:
             - elasticsearch
         depends_on:
