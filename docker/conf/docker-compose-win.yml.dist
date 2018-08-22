@@ -29,6 +29,7 @@ services:
             args: &permission_settings
                 www_data_uid: 82
                 www_data_gid: 82
+                github_token: place-your-token-here
         container_name: shopsys-framework-php-fpm
         volumes:
             - .:/var/www/html
@@ -62,8 +63,7 @@ services:
         build:
             context: microservices/product-search-export/docker
             args:
-                www_data_uid: 82
-                www_data_gid: 82
+                <<: *permission_settings
         container_name: shopsys-framework-microservice-product-search-export
         volumes:
             - ./microservices/product-search-export:/var/www/html

@@ -29,6 +29,10 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - check for usages of `ProductEditFormType` - it was removed and all it's attributes were moved to `ProductFormType` so use this form instead
 - pay attention to javascripts bound to your forms as well as the elements' names and ids has changed (e.g. from `#product_edit_form_productData` to `#product_form`) 
 
+### [shopsys/project-base]
+- php-fpm container now expect github_token set, so it is not necessary to provide it every time those containers are rebuilt
+    - see container `php-fpm` in `docker-compose.yml.dist` file in `docker/conf` folder
+
 ## [From 7.0.0-alpha4 to 7.0.0-alpha5]
 
 ### [shopsys/framework]
