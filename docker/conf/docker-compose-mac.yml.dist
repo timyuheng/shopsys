@@ -25,10 +25,10 @@ services:
     php-fpm:
         build:
             context: project-base/docker/php-fpm
-            args: &permission_settings
+            args: &common_build_args
                 www_data_uid: 501
                 www_data_gid: 20
-                github_token: place-your-token-here
+                github_oauth_token: place-your-token-here
         container_name: shopsys-framework-php-fpm
         volumes:
             - shopsys-framework-sync:/var/www/html
@@ -48,7 +48,7 @@ services:
         build:
             context: microservices/product-search/docker
             args:
-                <<: *permission_settings
+                <<: *common_build_args
         container_name: shopsys-framework-microservice-product-search
         volumes:
             - shopsys-framework-microservice-product-search-sync:/var/www/html
@@ -62,7 +62,7 @@ services:
         build:
             context: microservices/product-search-export/docker
             args:
-                <<: *permission_settings
+                <<: *common_build_args
         container_name: shopsys-framework-microservice-product-search-export
         volumes:
             - shopsys-framework-microservice-product-search-export-sync:/var/www/html

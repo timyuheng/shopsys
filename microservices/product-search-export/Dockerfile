@@ -23,20 +23,9 @@ COPY / /var/www/html
 # copy php configuration
 COPY docker/php-ini-overrides.ini /usr/local/etc/php/php.ini
 
-ARG github_token
-RUN composer config -g github-oauth.github.com $github_token
+ARG github_oauth_token
+RUN composer config -g github-oauth.github.com $github_oauth_token
 RUN composer install
-
-# allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
-# if the GID is already in use, we will assign GID 82 instead (82 is the standard uid/gid for "www-data" in Alpine)
-ARG www_data_uid
-ARG www_data_gid
-RUN deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data
-
-# set right permissions for folder and its content
-RUN chown -R www-data:www-data /var/www/html
-
-USER www-data
 
 # start symfony webserver
 CMD php bin/console server:run *:8000

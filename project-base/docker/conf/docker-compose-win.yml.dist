@@ -26,10 +26,10 @@ services:
     php-fpm:
         build:
             context: docker/php-fpm
-            args: &permission_settings
+            args:
                 www_data_uid: 82
                 www_data_gid: 82
-                github_token: place-your-token-here
+                github_oauth_token: place-your-token-here
         container_name: shopsys-framework-php-fpm
         volumes:
             - .:/var/www/html
