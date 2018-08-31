@@ -38,4 +38,5 @@ RUN chown -R www-data:www-data /var/www/html
 
 USER www-data
 
-RUN php bin/console server:run *:8000
+# start symfony webserver
+CMD php bin/console server:run *:8000
