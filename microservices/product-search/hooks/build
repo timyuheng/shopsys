@@ -1,4 +1,4 @@
 #!/bin/bash
 docker build \
-    --build-arg github_oauth_token=$github_oauth_token \x
+    --build-arg github_oauth_token=$github_oauth_token \
     -f $DOCKERFILE_PATH -t $IMAGE_NAME .
