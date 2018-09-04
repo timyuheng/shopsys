@@ -27,7 +27,11 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - check for usages of `TransportEditFormType` - it was removed and all it's attributes were moved to `TransportFormType` so use this form instead
 - check for usages of `PaymentEditFormType` - it was removed and all it's attributes were moved to `PaymentFormType` so use this form instead
 - check for usages of `ProductEditFormType` - it was removed and all it's attributes were moved to `ProductFormType` so use this form instead
-- pay attention to javascripts bound to your forms as well as the elements' names and ids has changed (e.g. from `#product_edit_form_productData` to `#product_form`) 
+- pay attention to javascripts bound to your forms as well as the elements' names and ids has changed (e.g. from `#product_edit_form_productData` to `#product_form`)
+
+### [shopsys/shopsys]
+- to use custom postgres configuration check changes in the `docker-compose.yml` templates and replicate them, there is a new volume for `postgres` container
+    - we also moved data from `/var/lib/postgresql/data` into `/var/lib/postgresql/data/pgdata`. To keep your data move everything into this subdirectory
 
 ## [From 7.0.0-alpha4 to 7.0.0-alpha5]
 
