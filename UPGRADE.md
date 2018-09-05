@@ -24,7 +24,19 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - `parameters.yml.dist` contains new parameter `microservice_product_search_export_url`
 - to use custom postgres configuration check changes in the `docker-compose.yml` templates and replicate them, there is a new volume for `postgres` container
     - PR [Improve Postgres configuration to improve performance](https://github.com/shopsys/shopsys/pull/444)
-    - we also moved data from `/var/lib/postgresql/data` into `/var/lib/postgresql/data/pgdata`. To keep your data move everything into this subdirectory
+    - Move data from `project-base/var/postgres-data` into `project-base/var/postgres-data/pgdata`. Instructions for Ubuntu:
+        - `docker-compose down`
+        - `sudo su`
+        - `cd project-base/var/postgres-data/`
+        - trick to create directory `pgdata` with correct permissions
+            - `cp -rp base/ pgdata`
+            - `rm -fr pgdata/*`
+        - `shopt -s extglob dotglob`
+        - `mv !(pgdata) pgdata`
+        - `shopt -u dotglob`
+        - `exit`
+        - *update postgres container in `docker-compose.yml`*
+        - `docker-compose up -d`
 
 ### [shopsys/framework]
 - check for usages of `TransportEditFormType` - it was removed and all it's attributes were moved to `TransportFormType` so use this form instead
