@@ -57,6 +57,7 @@ jobs:
         command: |
           kubectl create configmap nginx-configuration --from-file ../../docker/nginx/nginx.conf --dry-run --output=yaml > nginx-configuration.yml
           kubectl create configmap php-configuration --from-file ../docker/php-fpm/php-ini-overrides.ini --dry-run --output=yaml > php-configuration.yml
+          kubectl create configmap postgres-configuration --from-file ../docker/postgres/postgres.conf --dry-run --output=yaml > postgres-configuration.yml
           kubectl create configmap product-search-php-configuration --from-file ../../microservices/product-search/docker/php-ini-overrides.ini --dry-run --output=yaml > product-search-php-configuration.yml
           kubectl create configmap product-search-export-php-configuration --from-file ../../microservices/product-search-export/docker/php-ini-overrides.ini --dry-run --output=yaml > product-search-export-php-configuration.yml
         working_directory: project-base/k8s
