@@ -22,12 +22,27 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - added [Microservice Product Search Export](https://github.com/shopsys/microservice-product-search-export)
     - check changes in the `docker-compose.yml` template you used and replicate them, there is a new container `microservice-product-search-export`
     - `parameters.yml.dist` contains new parameter `microservice_product_search_export_url`
+- to use custom postgres configuration check changes in the `docker-compose.yml` templates and replicate them, there is a new volume for `postgres` container
+    - PR [Improve Postgres configuration to improve performance](https://github.com/shopsys/shopsys/pull/444)
+    - Move data from `project-base/var/postgres-data` into `project-base/var/postgres-data/pgdata`. Instructions for Ubuntu:
+        - `docker-compose down`
+        - `sudo su`
+        - `cd project-base/var/postgres-data/`
+        - trick to create directory `pgdata` with correct permissions
+            - `cp -rp base/ pgdata`
+            - `rm -fr pgdata/*`
+        - `shopt -s extglob dotglob`
+        - `mv !(pgdata) pgdata`
+        - `shopt -u dotglob`
+        - `exit`
+        - *update postgres container in `docker-compose.yml`*
+        - `docker-compose up -d`
 
 ### [shopsys/framework]
 - check for usages of `TransportEditFormType` - it was removed and all it's attributes were moved to `TransportFormType` so use this form instead
 - check for usages of `PaymentEditFormType` - it was removed and all it's attributes were moved to `PaymentFormType` so use this form instead
 - check for usages of `ProductEditFormType` - it was removed and all it's attributes were moved to `ProductFormType` so use this form instead
-- pay attention to javascripts bound to your forms as well as the elements' names and ids has changed (e.g. from `#product_edit_form_productData` to `#product_form`) 
+- pay attention to javascripts bound to your forms as well as the elements' names and ids has changed (e.g. from `#product_edit_form_productData` to `#product_form`)
 
 ### [shopsys/project-base]
 - php-fpm and microservice-product-search containers now expect github_oauth_token set, so it is not necessary to provide it every time those containers are rebuilt

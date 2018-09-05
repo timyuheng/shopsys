@@ -34,6 +34,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#429 - Microservice Product Search Export](https://github.com/shopsys/shopsys/pull/429)
     - framework doesn't use Elasticsearch directly anymore
     - feeds Elasticsearch via Product Search Export microservice
+#### Fixed
+- [#420 - Order flow fix](https://github.com/shopsys/shopsys/pull/420)
+    - fix fatal error in OrderFlow (issue #419): function call on string, also method getName does not exists since upgrade to Symfony 3 [@jDolba]
 
 ### [shopsys/project-base]
 #### Added
@@ -53,6 +56,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - added [Microservice Product Search Export](https://github.com/shopsys/microservice-product-search-export), microservice is used for feeding Elasticsearch by products
 - [#409 - Project-base: framework models extension](https://github.com/shopsys/shopsys/pull/409)
     - factories use EntityNameResolver to create their entities for simplification of extensibility
+#### Changed
+- [#444 - Improve Postgres configuration to improve performance](https://github.com/shopsys/shopsys/pull/444)
+    - performance improvement on our performance server with 80k products is about 7-8%
+    - introduced configuration of postgres docker image
 #### Fixed
 - [#436 - Symfony >=3.4.15 marked as conflicting in composer.json](https://github.com/shopsys/shopsys/pull/436)
     - bug https://github.com/symfony/symfony/issues/28296 in Symfony 3.4.15 version causes application build to fail
@@ -104,8 +111,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#401 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/401)
     - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search), microservice is used for the searching of products on Shopsys Framework 
     - added MicroserviceClient component
-- [#420 - Order flow fix](https://github.com/shopsys/shopsys/pull/420)
-    - fix fatal error in OrderFlow (issue #419): function call on string, also method getName does not exists since upgrade to Symfony 3
 
 #### Changed
 - [#385 - AccessDeniedHttpException replaced by AccessDeniedException](https://github.com/shopsys/shopsys/pull/385)
@@ -1478,3 +1483,4 @@ That's why is this section formatted differently.
 [@lukaso]: https://github.com/lukaso
 [@TomasVotruba]: https://github.com/TomasVotruba
 [@drekbour]: https://github.com/drekbour
+[@jDolba]: https://github.com/jDolba
