@@ -1,8 +1,6 @@
-FROM php:7.2-fpm-alpine
+FROM richarvey/nginx-php-fpm:1.5.5
 
-# install Composer
-COPY docker/docker-install-composer /usr/local/bin/docker-install-composer
-RUN chmod +x /usr/local/bin/docker-install-composer && docker-install-composer
+COPY docker/nginx.conf /etc/nginx/sites-enabled/nginx.conf
 
 # install necessary PHP extension
 RUN docker-php-ext-install \
@@ -20,7 +18,6 @@ COPY docker/docker-php-entrypoint /usr/local/bin/
 # configure docker command that properly starts the microservice
 COPY docker/docker-after-start /usr/local/bin/docker-after-start
 RUN chmod +x /usr/local/bin/docker-after-start
-CMD /usr/local/bin/docker-after-start
 
 # copy source code and PHP configuration to the container
 COPY / /var/www/html
@@ -30,9 +27,9 @@ COPY docker/php-ini-overrides.ini /usr/local/etc/php/php.ini
 # if the GID is already in use, we will assign GID 82 instead (82 is the standard uid/gid for "www-data" in Alpine)
 ARG www_data_uid
 ARG www_data_gid
-RUN if [ -n "$www_data_uid" ]; then deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data; fi
-RUN chown --recursive www-data:www-data /var/www/html
-USER www-data
+#RUN if [ -n "$www_data_uid" ]; then deluser www-data && (addgroup -g $www_data_gid www-data || addgroup -g 82 www-data) && adduser -u $www_data_uid -D -S -G www-data www-data; fi
+#RUN chown --recursive www-data:www-data /var/www/html
+#USER www-data
 
 # allow configuring the GitHub OAuth token
 ARG github_oauth_token
@@ -42,3 +39,8 @@ RUN composer config -g github-oauth.github.com $github_oauth_token
 RUN composer install
 
 WORKDIR /var/www/html
+
+
+ENV WEBROOT /var/www/html/public
+#ENV PUID $www_data_uid
+#ENV PGID $www_data_gid

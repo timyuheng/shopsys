@@ -1,8 +1,6 @@
-FROM php:7.2-fpm-alpine
+FROM richarvey/nginx-php-fpm
 
-# install Composer
-COPY docker/docker-install-composer /usr/local/bin/docker-install-composer
-RUN chmod +x /usr/local/bin/docker-install-composer && docker-install-composer
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # install necessary PHP extension
 RUN docker-php-ext-install \

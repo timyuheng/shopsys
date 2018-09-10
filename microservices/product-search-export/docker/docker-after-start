@@ -10,5 +10,4 @@ else
     composer update
 fi
 
-# start the PHP server
-php bin/console server:run *:8000
+tail -f /dev/null
