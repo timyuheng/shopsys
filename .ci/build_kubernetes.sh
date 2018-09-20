@@ -52,6 +52,7 @@ docker image pull ${DOCKER_USERNAME}/microservice-product-search:${DOCKER_IMAGE_
     echo "Image not found (see warning above), building it instead..." &&
     docker image build --build-arg github_oauth_token=${GITHUB_OAUTH_TOKEN} \
         --tag ${DOCKER_USERNAME}/microservice-product-search:${DOCKER_IMAGE_TAG} \
+        --target production \
         -f microservices/product-search/docker/Dockerfile \
         microservices/product-search &&
     docker image push ${DOCKER_USERNAME}/microservice-product-search:${DOCKER_IMAGE_TAG}
@@ -62,6 +63,7 @@ docker image pull ${DOCKER_USERNAME}/microservice-product-search-export:${DOCKER
     echo "Image not found (see warning above), building it instead..." &&
     docker image build --build-arg github_oauth_token=${GITHUB_OAUTH_TOKEN} \
         --tag ${DOCKER_USERNAME}/microservice-product-search-export:${DOCKER_IMAGE_TAG} \
+        --target production \
         -f microservices/product-search-export/docker/Dockerfile \
         microservices/product-search-export &&
     docker image push ${DOCKER_USERNAME}/microservice-product-search-export:${DOCKER_IMAGE_TAG}
