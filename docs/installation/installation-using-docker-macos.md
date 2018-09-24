@@ -70,7 +70,6 @@ docker-sync start
 Then rebuild and start containers
 ```
 docker-compose up -d --build
-
 ```
 
 ### 4. Setup the application

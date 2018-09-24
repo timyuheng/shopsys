@@ -33,7 +33,9 @@ services:
                 github_oauth_token: place-your-token-here
         container_name: shopsys-framework-php-fpm
         volumes:
-            - .:/var/www/html
+            - shopsys-framework-sync:/var/www/html
+            - shopsys-framework-vendor-sync:/var/www/html/vendor
+            - shopsys-framework-web-sync:/var/www/html/web
             - ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
         links:
             - postgres
@@ -120,3 +122,9 @@ volumes:
         driver: local
     elasticsearch-data:
         driver: local
+    shopsys-framework-sync:
+        external: true
+    shopsys-framework-vendor-sync:
+        external: true
+    shopsys-framework-web-sync:
+        external: true
