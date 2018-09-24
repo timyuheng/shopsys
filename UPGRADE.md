@@ -18,6 +18,15 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/microservice-product-search-export]
 
 ## [From 7.0.0-beta1 to Unreleased]
+### [shopsys/project-base]
+- add `patch` package into php-fpm dockerfile
+    - add `RUN apk add --update patch` into your `docker/php-fpm/Dockerfile`
+    - it must be before `USER` command
+    - stop docker containers `docker-compose down`
+    - rebuild php-fpm container `docker-compose build php-fpm`
+    - start docker containers `docker-compose up -d`
+- check changes in [`project-base/composer.json`](https://github.com/shopsys/shopsys/pull/490/files#diff-cac31b3c4c6bc02539499507675f9a5d) and apply them in your `composer.json`
+    - and install `composer install`
 
 ## [From 7.0.0-alpha6 to 7.0.0-beta1]
 ### [shopsys/framework]
