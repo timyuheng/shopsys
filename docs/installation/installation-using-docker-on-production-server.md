@@ -218,9 +218,9 @@ We also want to establish connection to the server without prompting for passwor
 docker save production-php-fpm | gzip | ssh -oStrictHostKeyChecking=no -i <PRIVATE_KEY_PATH> root@<YOUR_DOMAIN_HERE> 'gunzip | docker load'
 ```
 
-### Deployment On Production Server
+## Deployment On Production Server
 
-#### First Setup Deploy
+### First Setup Deploy
 
 Now we need to copy [`docker-compose.prod.yml.dist`](../../project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`. 
 After the image is in the repository of the production server we create docker containers and run phing target `build-new`,
@@ -255,7 +255,7 @@ docker-compose -p production exec php-fpm php bin/console shopsys:administrator:
 
 Now we go to `/admin/dashboard/` and fulfill all requests that are demanding for us by red colored links.
 
-#### Next Deploys
+### Next Deploys
 
 To preserve created data we need to use phing target `build` that consists of two commands.
 * `build-deploy-part-1-db-independent` no maintenance page is needed during execution of this command
