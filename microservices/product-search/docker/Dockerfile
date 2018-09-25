@@ -152,7 +152,8 @@ RUN docker-php-ext-install \
 # see https://github.com/docker-library/php/issues/240#issuecomment-305038173
 RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     gnu-libiconv \
-    sudo
+    sudo \
+    vim
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 ENV LC_ALL=en_US.utf8 LANG=en_US.utf8 LANGUAGE=en_US.utf8

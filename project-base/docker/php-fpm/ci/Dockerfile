@@ -24,7 +24,8 @@ RUN apk add --update \
     libzip-dev \
     autoconf \
     freetype-dev \
-    libjpeg-turbo-dev
+    libjpeg-turbo-dev \
+    vim
 
 # "zip" extension warns about deprecation if we do not use a system library
 RUN docker-php-ext-configure zip --with-libzip
