@@ -11,7 +11,69 @@
 * [PHP](http://php.net/manual/en/install.windows.php)
 * [Composer](https://getcomposer.org/doc/00-intro.md#installation-windows)
 * [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
-* [Docker-sync for Windows](http://docker-sync.io/)
+
+## Docker-sync for Windows
+
+* In settings of Windows docker check `Expose daemon on localhost:2375` and check drive option in `Shared Drives` tab, where the project will be installed.
+* Enable WSL - Open the `Windows Control Panel`, `Programs and Features`, click on the left on `Turn Windows features on or off` and check `Windows Subsystem for Linux` near the bottom, restart of Windows is required.
+* Install `Debian` app form `Microsoft Store` and launch it, so console window is opened.
+* Execute these commands in console window
+    ```
+    sudo apt update
+    sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
+    # docker
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+    sudo apt-key fingerprint 0EBFCD88
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get install -y docker-ce
+    echo "export DOCKER_HOST=tcp://127.0.0.1:2375" >> ~/.bashrc && source ~/.bashrc
+
+    # docker-compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    # docker-sync
+    sudo apt-get install ruby ruby-dev
+    sudo gem install -y docker-sync
+
+    # install sync tool for docker-sync
+    sudo apt-get install -y build-essential make
+    wget http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.gz
+    tar xvf ocaml-4.06.0.tar.gz
+    rm -f ocaml-4.06.0.tar.gz
+    cd ocaml-4.06.0
+    ./configure
+    make world
+    make opt
+    umask 022
+    sudo make install
+    sudo make clean
+    cd ..
+    rm -rf ocaml-4.06.0 
+    wget https://github.com/bcpierce00/unison/archive/v2.51.2.tar.gz
+    tar xvf v2.51.2.tar.gz
+    rm -f v2.51.2.tar.gz
+    cd unison-2.51.2
+    make UISTYLE=text
+    sudo cp src/unison /usr/local/bin/unison
+    sudo cp src/unison-fsmonitor /usr/local/bin/unison-fsmonitor
+    rm -rf unison-2.51.2
+    sudo dpkg-reconfigure tzdata
+
+    # with command `id -un` get the name of the user and paste this template `<USER_NAME_FROM_COMMAND> ALL=(root) NOPASSWD: /bin/mount` into sudoers
+    sudo visudo
+
+    # mounting of computer drives from `/mnt` path to root path `/`
+    sudo dd of=/etc/wsl.conf <<EOT
+    [automount]
+    enabled = true
+    root = /
+    options = "metadata,umask=22,fmask=11"
+    EOT
+    ```
+    Close console window and open it again so the new configuration is loaded.
 
 ## Steps
 ### 1. Create new project from Shopsys Framework sources
