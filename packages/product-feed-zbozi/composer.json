@@ -28,15 +28,15 @@
         "doctrine/dbal": "^2.7",
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/orm": "2.6.2",
-        "shopsys/form-types-bundle": "dev-master",
-        "shopsys/framework": "dev-master",
-        "shopsys/migrations": "dev-master",
-        "shopsys/plugin-interface": "dev-master",
-        "symfony/symfony": "^3.4.8",
+        "shopsys/form-types-bundle": "dev-ss-composer-patches",
+        "shopsys/framework": "dev-ss-composer-patches",
+        "shopsys/migrations": "dev-ss-composer-patches",
+        "shopsys/plugin-interface": "dev-ss-composer-patches",
+        "symfony/symfony": "^3.4.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0|^7.0",
-        "shopsys/coding-standards": "dev-master",
+        "shopsys/coding-standards": "dev-ss-composer-patches",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.4.8"
     },
