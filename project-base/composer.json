@@ -137,11 +137,6 @@
                 "file": "app/config/parameters_test.yml",
                 "keep-outdated": true
             }
-        ],
-        "patches": {
-            "doctrine/orm": {
-                "Hot fix: https://github.com/doctrine/doctrine2/issues/4869 and DDC-1960": "https://github.com/doctrine/doctrine2/compare/v2.6.2...shopsys:proposal-ddc-1960-ddc-4005.patch"
-            }
-        }
+        ]
     }
 }
